@@ -29,13 +29,13 @@ namespace actualizacionVinosBodega.Gestor
         {
             bodegasActualizables = buscarBodegasActualizables();
             pantalla.mostrarBodegasActualizables(bodegasActualizables);
-            importarActualizacionesVino();
-            determinarVinosParaActualizar();
+            
 
-            //if (bodegaSeleccionada != null)
-            //{
-            //    importarActualizacionesVino();
-            //}
+            if (bodegaSeleccionada != null)
+            {
+                importarActualizacionesVino();
+                determinarVinosParaActualizar(); 
+            }
 
         }
 
@@ -80,11 +80,12 @@ namespace actualizacionVinosBodega.Gestor
         public void determinarVinosParaActualizar()
         {
             List<Vino> vinosBodegaImportados = new List<Vino>();
+            Vino vinoBodega = new Vino();
             int indice = 0;
 
             while (infoVinosImportada != null && indice < infoVinosImportada.Count)
             {
-                Vino vinoBodega = bodegaSeleccionada.tienesEsteVino(infoVinosImportada[indice]);
+                vinoBodega = bodegaSeleccionada.tienesEsteVino(infoVinosImportada[indice]);
                 if (vinoBodega != null)
                 {
                     vinosBodegaImportados.Add(vinoBodega);
@@ -92,6 +93,7 @@ namespace actualizacionVinosBodega.Gestor
                 {
                     vinosBodegaImportados.Add(infoVinosImportada[indice]);
                 }
+                indice++;
             }
         }
     }
