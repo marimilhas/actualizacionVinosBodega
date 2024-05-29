@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace actualizacionVinosBodega.Entidades
 {
-    class Vino
+    public class Vino
     {
         public string nombre { get; set; }
         public int añada { get; set; }
@@ -24,7 +24,7 @@ namespace actualizacionVinosBodega.Entidades
 
         }
 
-        public Vino(string nombre, string notaCata, decimal precio, string img) // api actualizados
+        public Vino(string nombre, string notaCata, decimal precio, string img) // para api actualizados
         {
             this.nombre = nombre;
             this.notaDeCataBodega = notaCata;
@@ -33,7 +33,7 @@ namespace actualizacionVinosBodega.Entidades
         }
 
         public Vino(string nombre, int añada, string notaDeCataBodega, decimal precioArs,
-            string imagenEtiqueta, List<Varietal> varietal, List<Maridaje> maridaje, Bodega bodega) // api nuevos
+            string imagenEtiqueta, List<Varietal> varietal, List<Maridaje> maridaje, Bodega bodega) // para api nuevos
         {
             this.nombre = nombre;
             this.añada = añada;
@@ -49,6 +49,25 @@ namespace actualizacionVinosBodega.Entidades
         {
             return this.nombre == vino.nombre;
         }
+
+        public bool sosVinoActualizable(Vino vino)
+        {
+            return this.nombre == vino.nombre;
+        }
+
+        //public void crearVarietal()
+        //{
+
+        //    this.varietal = new List<Varietal>()
+        //    {
+        //        new Varietal()
+        //        {
+        //            descripcion = 
+        //            porcentajeComposicion =
+        //            TipoUva tipoUva = 
+        //        }
+        //    }
+        //}
     }
 }
 

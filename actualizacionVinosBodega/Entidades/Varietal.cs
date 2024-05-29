@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace actualizacionVinosBodega.Entidades
 {
-    class Varietal
+    public class Varietal
     {
         public string descripcion { get; set; }
         public float porcentajeComposicion { get; set; }

@@ -6,19 +6,25 @@ using System.Threading.Tasks;
 using actualizacionVinosBodega.Entidades;
 using actualizacionVinosBodega.Datos;
 using actualizacionVinosBodega.Pantalla;
+using Datos;
 
 namespace actualizacionVinosBodega.Gestor
 {
     public class GestorImportadorBodega
     {
         private PantallaBodegas pantalla;
-        private DatosBodega objsbodega = new DatosBodega(); // instancia de la capa de datos
-        private InterfazAPIBodega interfaz = new InterfazAPIBodega();
-        
+        private DatosBodega objsbodega; 
+        private InterfazAPIBodega interfaz;
+
+        private List<string> bodegasActualizables;
         private Bodega bodegaSeleccionada;
-        private List<string> bodegasActualizables = new List<string>();
-        private List<Vino> infoVinosImportada = new List<Vino>();
         DateTime fechaActual;
+        private List<Vino> infoVinosImportada;
+        List<Maridaje> maridajes;
+        List<TipoUva> tiposUva;
+
+        List<Tuple<Vino, bool>> vinosActualizarCrear; // se puede poner este atributo?
+        List<Vino> resumen;
 
         public GestorImportadorBodega(PantallaBodegas pantalla)
         {
@@ -27,14 +33,18 @@ namespace actualizacionVinosBodega.Gestor
 
         public void opcionImportarActualizacionBodegas() 
         {
-            bodegasActualizables = buscarBodegasActualizables();
-            pantalla.mostrarBodegasActualizables(bodegasActualizables);
-            
+            buscarBodegasActualizables();
+            pantalla.mostrarBodegasActualizables(bodegasActualizables); 
 
             if (bodegaSeleccionada != null)
             {
-                importarActualizacionesVino();
-                determinarVinosParaActualizar(); 
+                infoVinosImportada = importarActualizacionesVino();
+                vinosActualizarCrear = determinarVinosParaActualizar();
+                resumen = crearOActualizarVinos();
+                pantalla.mostrarResumen();
+
+                //pantalla.mostrarBodegaSeleccionada(bodegaSeleccionada.nombre);
+                //pantalla.mostrarListaVinos(infoVinosImportada);     // prueba para ver q hasta ahora funciona
             }
 
         }
@@ -44,20 +54,20 @@ namespace actualizacionVinosBodega.Gestor
             return DateTime.Now.Date;
         }
 
-        public List<string> buscarBodegasActualizables()
+        private void buscarBodegasActualizables()
         {
             fechaActual = obtenerFechaActual();
+            objsbodega = new DatosBodega();
             List<Bodega> bodegas = objsbodega.Listar();
-            List<string> nombresActualizables = new List<string>();
+            bodegasActualizables = new List<string>();
 
             foreach (Bodega bodega in bodegas)
             {
                 if (bodega.tieneActualizacionNovedadesVino(fechaActual))
                 {
-                    nombresActualizables.Add(bodega.nombre);
+                    bodegasActualizables.Add(bodega.nombre);
                 }
             }
-            return nombresActualizables;
         }
 
         public void tomarSeleccionBodega(string nombreBodega)
@@ -65,37 +75,132 @@ namespace actualizacionVinosBodega.Gestor
             List<Bodega> bodegas = objsbodega.Listar();
             foreach(Bodega bodega in bodegas)
             {
-                if (bodega.nombre.Equals(nombreBodega))
+                if (bodega.nombre == nombreBodega)
                 {
                     bodegaSeleccionada = bodega;
+                    break;
                 }
             }
         }
 
-        public void importarActualizacionesVino()
+        public List<Vino> importarActualizacionesVino()
         {
-            infoVinosImportada = interfaz.obtenerActualizacionesVino();
+            interfaz = new InterfazAPIBodega();
+            return interfaz.obtenerActualizacionesVino();
         }
 
-        public void determinarVinosParaActualizar()
+        // por cada vino de la api le pregunta a la bodega si lo tiene, en caso contrario se va a crear
+        // inicializa la lista vinosParaActualizar con los vinos importados y su estado
+        // VER SI MÉTODO CUMPLE CON DIAGRAMA
+        private List<Tuple<Vino, bool>> determinarVinosParaActualizar()
         {
-            List<Vino> vinosBodegaImportados = new List<Vino>();
-            Vino vinoBodega = new Vino();
-            int indice = 0;
+            vinosActualizarCrear = new List<Tuple<Vino, bool>>();
+            Vino vinoImportado = new Vino();
+            bool paraActualizar = false;
+            int i = 0;
 
-            while (infoVinosImportada != null && indice < infoVinosImportada.Count)
+            while (infoVinosImportada != null && i < infoVinosImportada.Count)
             {
-                vinoBodega = bodegaSeleccionada.tienesEsteVino(infoVinosImportada[indice]);
-                if (vinoBodega != null)
+                vinoImportado = infoVinosImportada[i];
+                paraActualizar = bodegaSeleccionada.tienesEsteVino(vinoImportado);
+
+                vinosActualizarCrear.Add(new Tuple<Vino, bool>(vinoImportado, paraActualizar));
+
+                i++;
+            }
+
+            return vinosActualizarCrear;
+        }
+
+        private List<Vino> crearOActualizarVinos()
+        {
+            List<Vino> resumen = new List<Vino>();
+            Vino vinoActCre = null;
+            int i = 0;
+            while (vinosActualizarCrear != null && i < vinosActualizarCrear.Count)
+            {
+                if (vinosActualizarCrear[i].Item2) // el vino se actualiza
                 {
-                    vinosBodegaImportados.Add(vinoBodega);
+                    vinoActCre = actualizarDatosVino(vinosActualizarCrear[i].Item1);
                 } else
                 {
-                    vinosBodegaImportados.Add(infoVinosImportada[indice]);
+                    vinoActCre = generarVino(vinosActualizarCrear[i].Item1);
                 }
-                indice++;
+
+                if (vinoActCre != null)
+                {
+                    resumen.Add(vinoActCre);
+                }
+                i++;
             }
+            return resumen;
         }
-    }
+
+        private Vino actualizarDatosVino(Vino vinoActualizar)
+        {
+            return bodegaSeleccionada.actualizarDatosVino(vinoActualizar, fechaActual); // mensaje a la bodega
+        }
+
+        private Vino generarVino(Vino vinoCrear)
+        {
+            Vino vinoCreado = null;
+            List<TipoUva> tiposUva = buscarTipoUva(vinoCrear.varietal);
+            List<Maridaje> maridajes = buscarMaridajes(vinoCrear.maridaje);
+            vinoCreado = crearVino(vinoCrear, tiposUva, maridajes);
+            return vinoCreado;
+        }
+
+        private List<Maridaje> buscarMaridajes(List<Maridaje> maridajesImportado)     // inconsistencia con diagrama
+        {
+            DatosMaridaje objsMaridaje = new DatosMaridaje();
+            maridajes = new List<Maridaje>();
+            Maridaje maridajeNuevo = null;
+
+            foreach (Maridaje maridajeImp in maridajesImportado)
+            {
+                foreach(Maridaje maridajeSist in objsMaridaje.maridajes)
+                {
+                    maridajeNuevo = maridajeSist.sosMaridaje(maridajeImp);
+                    if (maridajeNuevo != null) { maridajes.Add(maridajeNuevo); };
+                }
+            }    
+           return maridajes;
+        }
+
+        private List<TipoUva> buscarTipoUva(List<Varietal> varietalesImportados)
+        {
+            DatosTipoUva objsTipoUva = new DatosTipoUva();
+            tiposUva = new List<TipoUva>();
+            TipoUva tipoUvaNuevo = null;
+
+            foreach(Varietal varietalImp in varietalesImportados)
+            {
+                TipoUva tipoUvaImportado = varietalImp.tipoUva;
+                foreach (TipoUva tipoUva in objsTipoUva.tiposUva)
+                {
+                    tipoUvaNuevo = tipoUva.sosTipoUva(tipoUvaImportado);
+                    if (tipoUvaNuevo != null) { tiposUva.Add(tipoUvaNuevo); };
+                }
+            }
+            return tiposUva;
+        }
+
+        private Vino crearVino(Vino vinoCrear, List<TipoUva> tipoUva, List<Maridaje> maridajes) // es list maridaje o uno solo?
+        {
+            Vino vinoCreado = new Vino
+            {
+                nombre = vinoCrear.nombre,
+                añada = vinoCrear.añada,
+                notaDeCataBodega = vinoCrear.notaDeCataBodega,
+                precioArs = vinoCrear.precioArs,
+                fechaActualizacion = fechaActual,
+                imagenEtiqueta = vinoCrear.imagenEtiqueta,
+                varietal = vinoCrear.varietal,  // esto lo tiene que hacer el objeto
+                maridaje = maridajes,
+                bodega = vinoCrear.bodega,
+            };
+            return vinoCreado;
+        }
+    }   
 }
 

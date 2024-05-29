@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Datos\DatosBodega.cs" />
     <Compile Include="Datos\DatosMaridaje.cs" />
+    <Compile Include="Datos\DatosTipoUva.cs" />
     <Compile Include="Datos\DatosVarietal.cs" />
     <Compile Include="Datos\DatosVino.cs" />
     <Compile Include="Entidades\Bodega.cs" />

@@ -8,7 +8,7 @@ using Datos;
 
 namespace actualizacionVinosBodega.Entidades
 {
-    class Bodega
+    public class Bodega
     {
         public string nombre { get; set; }
         public string descripcion { get; set; }
@@ -30,20 +30,39 @@ namespace actualizacionVinosBodega.Entidades
             return diferencia >= periodoActualizacion;
         }
 
-        public Vino tienesEsteVino(Vino vino)
+        public bool tienesEsteVino(Vino vinoImportado)
         {
             List<Vino> vinosBodega = new DatosVino().ObtenerVinosBodega(this); // REVISAR
-            Vino vinoEncontrado = null;
+            bool encontrado = false;
             int i = 0;
 
             while (vinosBodega != null && i < vinosBodega.Count)
             {
-                if (vinosBodega[i].sosEsteVino(vino))
+                if (vinosBodega[i].sosEsteVino(vinoImportado))
                 {
-                    vinoEncontrado = vinosBodega[i];
-                } 
+                    encontrado = true;
+                }
             }
-            return vinoEncontrado;
+            return encontrado;
+        }
+
+        public Vino actualizarDatosVino(Vino vinoActualizar, DateTime fechaActual)
+        {
+            List<Vino> vinosBodega = new DatosVino().ObtenerVinosBodega(this); // REVISAR
+            int i = 0;
+
+            while (vinosBodega != null && i < vinosBodega.Count)
+            {
+                if (vinosBodega[i].sosVinoActualizable(vinoActualizar))
+                {
+                    vinosBodega[i].precioArs = vinoActualizar.precioArs;    // hace falta crear un método set? aplica a todos
+                    vinosBodega[i].notaDeCataBodega = vinoActualizar.notaDeCataBodega;
+                    vinosBodega[i].imagenEtiqueta = vinoActualizar.imagenEtiqueta;
+                    vinosBodega[i].fechaActualizacion = fechaActual;
+                    return vinosBodega[i];
+                }
+            }
+            return null;
         }
     }
 }

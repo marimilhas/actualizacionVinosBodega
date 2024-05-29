@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using actualizacionVinosBodega.Entidades;
 using actualizacionVinosBodega.Datos;
+using System.Security.Cryptography;
 
 namespace Datos
 {
@@ -11,6 +12,12 @@ namespace Datos
         private DatosBodega objsBodega = new DatosBodega();
         private DatosVarietal objsVarietal = new DatosVarietal();
         private DatosMaridaje objsMaridaje = new DatosMaridaje();
+        private List<Varietal> varietales;
+
+        public DatosVino()
+        {
+            varietales = objsVarietal.obtenerVarietales();
+        }
 
         public List<Vino> ObtenerVinos()
         {
@@ -25,10 +32,7 @@ namespace Datos
                 precioArs = 1200,
                 fechaActualizacion = new DateTime(2023, 10, 15), 
                 imagenEtiqueta = "etiqueta_vino_tinto_clasico.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[0]
-                },
+                varietal = { varietales[0] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[0],
@@ -45,10 +49,7 @@ namespace Datos
                 precioArs = 1800,
                 fechaActualizacion = new DateTime(2023, 10, 15),
                 imagenEtiqueta = "etiqueta_vino_tinto_reserva.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[1]
-                },
+                varietal = { varietales[1] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[0],
@@ -65,10 +66,7 @@ namespace Datos
                 precioArs = 1500,
                 fechaActualizacion = new DateTime(2023, 10, 15),
                 imagenEtiqueta = "etiqueta_vino_tinto_robusto.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[4]
-                },
+                varietal = { varietales[2] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[0]
@@ -85,10 +83,7 @@ namespace Datos
                 precioArs = 950,
                 fechaActualizacion = new DateTime(2023, 8, 20),
                 imagenEtiqueta = "etiqueta_vino_blanco_suave.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[2]
-                },
+                varietal = { varietales[3] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[1]
@@ -104,10 +99,7 @@ namespace Datos
                 precioArs = 1100,
                 fechaActualizacion = new DateTime(2023, 8, 20),
                 imagenEtiqueta = "etiqueta_vino_blanco_afrutado.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[2]
-                },
+                varietal = { varietales[4] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[2]
@@ -123,10 +115,7 @@ namespace Datos
                 precioArs = 1500,
                 fechaActualizacion = new DateTime(2023, 8, 20),
                 imagenEtiqueta = "etiqueta_vino_tinto_robusto.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[4]
-                },
+                varietal = { varietales[5] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[0]
@@ -143,10 +132,7 @@ namespace Datos
                 precioArs = 1200,
                 fechaActualizacion = new DateTime(2023, 9, 5),
                 imagenEtiqueta = "etiqueta_vino_tinto_clasico.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[0]
-                },
+                varietal = { varietales[6] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[0],
@@ -163,10 +149,7 @@ namespace Datos
                 precioArs = 1800,
                 fechaActualizacion = new DateTime(2023, 9, 5),
                 imagenEtiqueta = "etiqueta_vino_tinto_reserva.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[1]
-                },
+                varietal = { varietales[7] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[0],
@@ -183,10 +166,7 @@ namespace Datos
                 precioArs = 1000,
                 fechaActualizacion = new DateTime(2023, 9, 5),
                 imagenEtiqueta = "etiqueta_vino_rosado_fresco.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[3]
-                },
+                varietal = { varietales[8] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[2]
@@ -203,10 +183,7 @@ namespace Datos
                 precioArs = 950,
                 fechaActualizacion = new DateTime(2023, 7, 12),
                 imagenEtiqueta = "etiqueta_vino_blanco_suave.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[2]
-                },
+                varietal = { varietales[2] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[1]
@@ -221,10 +198,7 @@ namespace Datos
                 precioArs = 1200,
                 fechaActualizacion = new DateTime(2023, 7, 12),
                 imagenEtiqueta = "etiqueta_vino_blanco_elegante.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[2]
-                },
+                varietal = { varietales[2] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[2]
@@ -240,10 +214,7 @@ namespace Datos
                 precioArs = 2200,
                 fechaActualizacion = new DateTime(2023, 7, 12),
                 imagenEtiqueta = "etiqueta_vino_tinto_reserva.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[5]
-                },
+                varietal = { varietales[1] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[0],
@@ -261,11 +232,7 @@ namespace Datos
                 precioArs = 2500,
                 fechaActualizacion = new DateTime(2023, 10, 15),
                 imagenEtiqueta = "etiqueta_vino_tinto_gran_reserva.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[0],
-                    objsVarietal.lista[1]
-                },
+                varietal = { varietales[1], varietales[1] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[0],
@@ -282,11 +249,7 @@ namespace Datos
                 precioArs = 1100,
                 fechaActualizacion = new DateTime(2023, 10, 15),
                 imagenEtiqueta = "etiqueta_vino_blanco_joven.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[2],
-                    objsVarietal.lista[5]
-                },
+                varietal = { varietales[2], varietales[5] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[1],
@@ -304,11 +267,7 @@ namespace Datos
                 precioArs = 1900,
                 fechaActualizacion = new DateTime(2023, 8, 20),
                 imagenEtiqueta = "etiqueta_vino_tinto_reserva.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[3],
-                    objsVarietal.lista[7]
-                },
+                varietal = { varietales[3], varietales[7] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[0],
@@ -325,11 +284,7 @@ namespace Datos
                 precioArs = 1200,
                 fechaActualizacion = new DateTime(2023, 8, 20),
                 imagenEtiqueta = "etiqueta_vino_rosado_semi_seco.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[6],
-                    objsVarietal.lista[8]
-                },
+                varietal = { varietales[6], varietales[8] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[2],
@@ -347,11 +302,7 @@ namespace Datos
                 precioArs = 1800,
                 fechaActualizacion = new DateTime(2023, 9, 5),
                 imagenEtiqueta = "etiqueta_vino_blanco_de_autor.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[2],
-                    objsVarietal.lista[4]
-                },
+                varietal = { varietales[2], varietales[4] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[1],
@@ -368,11 +319,7 @@ namespace Datos
                 precioArs = 1300,
                 fechaActualizacion = new DateTime(2023, 9, 5),
                 imagenEtiqueta = "etiqueta_vino_tinto_joven.jpg",
-                varietal = new List<Varietal>
-                {
-                    objsVarietal.lista[0],
-                    objsVarietal.lista[5]
-                },
+                varietal = { varietales[0], varietales[5] },
                 maridaje = new List<Maridaje>
                 {
                     objsMaridaje.maridajes[2],

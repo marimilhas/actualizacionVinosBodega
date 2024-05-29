@@ -14,6 +14,12 @@ namespace actualizacionVinosBodega.Gestor
         private DatosBodega objsBodega = new DatosBodega();
         private DatosVarietal objsVarietal = new DatosVarietal();
         private DatosMaridaje objsMaridaje = new DatosMaridaje();
+        private List<Varietal> varietales;
+
+        public InterfazAPIBodega()
+        {
+            varietales = objsVarietal.obtenerVarietales();
+        }
         public List<Vino> obtenerActualizacionesVino()
         {
             List<Vino> actualizaciones = new List<Vino>();
@@ -47,10 +53,7 @@ namespace actualizacionVinosBodega.Gestor
                     "De elegancia singular, con notas a frutos rojos maduros y un toque sutil de especias.",
                     500,
                     "etiqueta_vino_famoso.jpg",
-                    new List<Varietal>
-                    {
-                        objsVarietal.lista[8]
-                    },
+                    new List<Varietal> { varietales[8] },
                     new List<Maridaje>
                     {
                         objsMaridaje.maridajes[1],
@@ -65,10 +68,7 @@ namespace actualizacionVinosBodega.Gestor
                      "Con aromas seductores a frutos negros, violetas y notas especiadas.",
                      4500,
                      "vino_frutos.jpg",
-                     new List<Varietal>
-                     {
-                         objsVarietal.lista[5]
-                     },
+                     new List<Varietal> { varietales[5] },
                      new List<Maridaje>
                      {
                          objsMaridaje.maridajes[0],
