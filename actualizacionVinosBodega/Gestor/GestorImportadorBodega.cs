@@ -88,8 +88,15 @@ namespace actualizacionVinosBodega.Gestor
 
         public List<Vino> importarActualizacionesVino()
         {
-            interfaz = new InterfazAPIBodega();
-            return interfaz.obtenerActualizacionesVino();
+            try
+            {
+                interfaz = new InterfazAPIBodega();
+                return interfaz.obtenerActualizacionesVino();
+            } catch(Exception e)
+            {
+                return null;
+            }
+            
         }
 
         // por cada vino de la api le pregunta a la bodega si lo tiene, en caso contrario se va a crear

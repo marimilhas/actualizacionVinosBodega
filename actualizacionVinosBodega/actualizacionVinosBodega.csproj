@@ -59,7 +59,9 @@
     <Compile Include="Datos\DatosVarietal.cs" />
     <Compile Include="Datos\DatosVino.cs" />
     <Compile Include="Entidades\Bodega.cs" />
+    <Compile Include="Entidades\Enofilo.cs" />
     <Compile Include="Entidades\Maridaje.cs" />
+    <Compile Include="Entidades\Seguido.cs" />
     <Compile Include="Entidades\Varietal.cs" />
     <Compile Include="Entidades\Vino.cs" />
     <Compile Include="Gestor\GestorImportadorBodega.cs" />

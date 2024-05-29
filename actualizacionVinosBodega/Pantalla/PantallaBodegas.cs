@@ -70,14 +70,17 @@ namespace actualizacionVinosBodega.Pantalla
                 gestor.tomarSeleccionBodega(bodegaSeleccionada);
 
                 List<Vino> infoVinosImportada = gestor.importarActualizacionesVino();
-                List<Tuple<Vino, bool>> vinosActualizarCrear = gestor.determinarVinosParaActualizar(infoVinosImportada);
-                List<Vino> resumen = gestor.crearOActualizarVinos(vinosActualizarCrear);
 
-                if (resumen != null)
+                if (infoVinosImportada != null)
                 {
+                    List<Tuple<Vino, bool>> vinosActualizarCrear = gestor.determinarVinosParaActualizar(infoVinosImportada);
+                    List<Vino> resumen = gestor.crearOActualizarVinos(vinosActualizarCrear);
                     mostrarResumen(resumen, bodegaSeleccionada);
-                }
 
+                } else
+                {
+                    MessageBox.Show("El sistema de bodegas no responde", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
@@ -92,24 +95,6 @@ namespace actualizacionVinosBodega.Pantalla
             }
              
         }
-
-        //public void mostrarVinosBodega() {
-
-        //    List<Vino> vinosBodega = new DatosVino().ObtenerVinosBodega(
-        //        new Bodega
-        //        {
-        //            nombre = "Bodega Napa Valley",
-        //            descripcion = "Una de las bodegas más prestigiosas de California, conocida por sus vinos de alta calidad.",
-        //            historia = "Fundada en 1882, es un ícono en la historia vitivinícola de Estados Unidos.",
-        //            coordenadasUbicacion = "38.5025, -122.2654",
-        //            fechaUltimaActualizacion = new DateTime(2023, 7, 12),
-        //            periodoActualizacion = 10
-        //        }
-
-
-
-        //        );
-        //}
 
 
         // método de prueba
