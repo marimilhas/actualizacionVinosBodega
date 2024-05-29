@@ -16,6 +16,7 @@ namespace actualizacionVinosBodega.Pantalla
     public partial class PantallaBodegas : Form
     {
         private GestorImportadorBodega gestor;
+        string bodegaSeleccionada;
         //private GestorImportadorBodega gestor;
         //grillaVinosActualizados
         //labelBodegaSeleccionada
@@ -63,17 +64,17 @@ namespace actualizacionVinosBodega.Pantalla
             if (e.ColumnIndex == dataGridView1.Columns["btnseleccionar"].Index && e.RowIndex >= 0)
             {
                 DataGridViewRow fila = dataGridView1.Rows[e.RowIndex];
-                string nombreBodega = fila.Cells["nombre"].Value.ToString();
+                bodegaSeleccionada = fila.Cells["nombre"].Value.ToString();
 
                 //mostrarBodegas();
-                gestor.tomarSeleccionBodega(nombreBodega);
+                gestor.tomarSeleccionBodega(bodegaSeleccionada);
                 //mostrarBodegaSeleccionada(nombreBodega);
             }
         }
 
-        public void mostrarResumen()
+        public void mostrarResumen(List<Vino> resumen, Bodega bodegaSeleccionada)
         {
-
+            dgvVinos.DataSource = resumen; 
         }
 
         // método de prueba
@@ -127,25 +128,12 @@ namespace actualizacionVinosBodega.Pantalla
 
         }
 
-        private void mostrarResumen()
-        {
-
-        }
-
 
         private void iconButton1_Click(object sender, EventArgs e)
         {
-
-            List<Vino> vinos = gestor.importarActualizacionesVino();
-
-            if (vinos != null)
-            {
-                dgvVinos.DataSource = vinos;
-            }
-            else
-            {
-                MessageBox.Show("No se encontraron bodegas con actualizaciones disponibles.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            List<Vino> vinosActCre = gestor.resumen;
+            Bodega bodega = gestor.bodegaSeleccionada;
+            mostrarResumen(vinosActCre, bodega);
         }
     }
 }

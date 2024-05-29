@@ -17,14 +17,14 @@ namespace actualizacionVinosBodega.Gestor
         private InterfazAPIBodega interfaz;
 
         private List<string> bodegasActualizables;
-        private Bodega bodegaSeleccionada;
-        DateTime fechaActual;
+        public Bodega bodegaSeleccionada;
+        private DateTime fechaActual;
         private List<Vino> infoVinosImportada;
-        List<Maridaje> maridajes;
-        List<TipoUva> tiposUva;
+        private List<Maridaje> maridajes;
+        private List<TipoUva> tiposUva;
 
-        List<Tuple<Vino, bool>> vinosActualizarCrear; // se puede poner este atributo?
-        List<Vino> resumen;
+        private List<Tuple<Vino, bool>> vinosActualizarCrear; // se puede poner este atributo?
+        public List<Vino> resumen;
 
         public GestorImportadorBodega(PantallaBodegas pantalla)
         {
@@ -41,8 +41,11 @@ namespace actualizacionVinosBodega.Gestor
                 infoVinosImportada = importarActualizacionesVino();
                 vinosActualizarCrear = determinarVinosParaActualizar();
                 resumen = crearOActualizarVinos();
-                pantalla.mostrarResumen();
 
+                if (resumen != null)
+                {
+                    pantalla.mostrarResumen(resumen, bodegaSeleccionada);
+                }
                 //pantalla.mostrarBodegaSeleccionada(bodegaSeleccionada.nombre);
                 //pantalla.mostrarListaVinos(infoVinosImportada);     // prueba para ver q hasta ahora funciona
             }
