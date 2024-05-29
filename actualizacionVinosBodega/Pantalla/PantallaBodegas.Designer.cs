@@ -121,7 +121,7 @@
             this.iconButton1.TabIndex = 4;
             this.iconButton1.Text = "iconButton1";
             this.iconButton1.UseVisualStyleBackColor = true;
-            this.iconButton1.Click += new System.EventHandler(this.iconButton1_Click);
+            //this.iconButton1.Click += new System.EventHandler(this.iconButton1_Click);
             // 
             // PantallaBodegas
             // 

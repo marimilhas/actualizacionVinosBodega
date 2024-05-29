@@ -42,6 +42,7 @@ namespace actualizacionVinosBodega.Entidades
                 {
                     encontrado = true;
                 }
+                i++;
             }
             return encontrado;
         }
@@ -61,6 +62,7 @@ namespace actualizacionVinosBodega.Entidades
                     vinosBodega[i].fechaActualizacion = fechaActual;
                     return vinosBodega[i];
                 }
+                i++;
             }
             return null;
         }

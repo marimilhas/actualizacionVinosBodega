@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using actualizacionVinosBodega.Datos;
 using actualizacionVinosBodega.Entidades;
 using actualizacionVinosBodega.Gestor;
+using Datos;
 
 namespace actualizacionVinosBodega.Pantalla
 {
@@ -66,16 +67,50 @@ namespace actualizacionVinosBodega.Pantalla
                 DataGridViewRow fila = dataGridView1.Rows[e.RowIndex];
                 bodegaSeleccionada = fila.Cells["nombre"].Value.ToString();
 
-                //mostrarBodegas();
                 gestor.tomarSeleccionBodega(bodegaSeleccionada);
-                //mostrarBodegaSeleccionada(nombreBodega);
+
+                //List<Vino> infoVinosImportada = gestor.importarActualizacionesVino();
+                //List<Tuple<Vino,bool>> vinosActualizarCrear = gestor.determinarVinosParaActualizar(infoVinosImportada);
+                //resumen = crearOActualizarVinos(vinosActualizarCrear);
+
+                //if (resumen != null)
+                //{
+                //    pantalla.mostrarResumen(resumen, bodegaSeleccionada);
+                //}
+
             }
         }
 
         public void mostrarResumen(List<Vino> resumen, Bodega bodegaSeleccionada)
         {
-            dgvVinos.DataSource = resumen; 
+            if (resumen != null)
+            {
+                dgvVinos.DataSource = resumen;
+            } else
+            {
+                MessageBox.Show("Esta vacío");
+            }
+             
         }
+
+        //public void mostrarVinosBodega() {
+
+        //    List<Vino> vinosBodega = new DatosVino().ObtenerVinosBodega(
+        //        new Bodega
+        //        {
+        //            nombre = "Bodega Napa Valley",
+        //            descripcion = "Una de las bodegas más prestigiosas de California, conocida por sus vinos de alta calidad.",
+        //            historia = "Fundada en 1882, es un ícono en la historia vitivinícola de Estados Unidos.",
+        //            coordenadasUbicacion = "38.5025, -122.2654",
+        //            fechaUltimaActualizacion = new DateTime(2023, 7, 12),
+        //            periodoActualizacion = 10
+        //        }
+
+
+
+        //        );
+        //}
+
 
         // método de prueba
         public void mostrarBodegas()
@@ -128,13 +163,12 @@ namespace actualizacionVinosBodega.Pantalla
 
         }
 
-
-        private void iconButton1_Click(object sender, EventArgs e)
-        {
-            List<Vino> vinosActCre = gestor.resumen;
-            Bodega bodega = gestor.bodegaSeleccionada;
-            mostrarResumen(vinosActCre, bodega);
-        }
+        //private void iconbutton1_click(object sender, eventargs e)
+        //{
+        //    list<vino> vinosactcre = gestor.resumen;
+        //    bodega bodega = gestor.bodegaseleccionada;
+        //    mostrarresumen(vinosactcre, bodega);
+        //}
     }
 }
 

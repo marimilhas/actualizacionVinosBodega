@@ -39,15 +39,15 @@ namespace actualizacionVinosBodega.Gestor
             if (bodegaSeleccionada != null)
             {
                 infoVinosImportada = importarActualizacionesVino();
-                vinosActualizarCrear = determinarVinosParaActualizar();
-                resumen = crearOActualizarVinos();
+                vinosActualizarCrear = determinarVinosParaActualizar(infoVinosImportada);
+                resumen = crearOActualizarVinos(vinosActualizarCrear);
 
                 if (resumen != null)
                 {
                     pantalla.mostrarResumen(resumen, bodegaSeleccionada);
                 }
                 //pantalla.mostrarBodegaSeleccionada(bodegaSeleccionada.nombre);
-                //pantalla.mostrarListaVinos(infoVinosImportada);     // prueba para ver q hasta ahora funciona
+                pantalla.mostrarListaVinos(infoVinosImportada);     // prueba para ver q hasta ahora funciona
             }
 
         }
@@ -95,7 +95,7 @@ namespace actualizacionVinosBodega.Gestor
         // por cada vino de la api le pregunta a la bodega si lo tiene, en caso contrario se va a crear
         // inicializa la lista vinosParaActualizar con los vinos importados y su estado
         // VER SI MÉTODO CUMPLE CON DIAGRAMA
-        private List<Tuple<Vino, bool>> determinarVinosParaActualizar()
+        public List<Tuple<Vino, bool>> determinarVinosParaActualizar(List<Vino> infoVinosImportada)
         {
             vinosActualizarCrear = new List<Tuple<Vino, bool>>();
             Vino vinoImportado = new Vino();
@@ -115,7 +115,7 @@ namespace actualizacionVinosBodega.Gestor
             return vinosActualizarCrear;
         }
 
-        private List<Vino> crearOActualizarVinos()
+        private List<Vino> crearOActualizarVinos(List<Tuple<Vino, bool>> vinosActualizarCrear)
         {
             List<Vino> resumen = new List<Vino>();
             Vino vinoActCre = null;
@@ -147,8 +147,8 @@ namespace actualizacionVinosBodega.Gestor
         private Vino generarVino(Vino vinoCrear)
         {
             Vino vinoCreado = null;
-            List<TipoUva> tiposUva = buscarTipoUva(vinoCrear.varietal);
-            List<Maridaje> maridajes = buscarMaridajes(vinoCrear.maridaje);
+            tiposUva = buscarTipoUva(vinoCrear.varietal);
+            maridajes = buscarMaridajes(vinoCrear.maridaje);
             vinoCreado = crearVino(vinoCrear, tiposUva, maridajes);
             return vinoCreado;
         }
