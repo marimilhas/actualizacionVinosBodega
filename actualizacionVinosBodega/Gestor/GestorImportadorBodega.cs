@@ -36,19 +36,19 @@ namespace actualizacionVinosBodega.Gestor
             buscarBodegasActualizables();
             pantalla.mostrarBodegasActualizables(bodegasActualizables); 
 
-            if (bodegaSeleccionada != null)
-            {
-                infoVinosImportada = importarActualizacionesVino();
-                vinosActualizarCrear = determinarVinosParaActualizar(infoVinosImportada);
-                resumen = crearOActualizarVinos(vinosActualizarCrear);
+            //if (bodegaSeleccionada != null)
+            //{
+            //    infoVinosImportada = importarActualizacionesVino();
+            //    vinosActualizarCrear = determinarVinosParaActualizar(infoVinosImportada);
+            //    resumen = crearOActualizarVinos(vinosActualizarCrear);
 
-                if (resumen != null)
-                {
-                    pantalla.mostrarResumen(resumen, bodegaSeleccionada);
-                }
-                //pantalla.mostrarBodegaSeleccionada(bodegaSeleccionada.nombre);
-                pantalla.mostrarListaVinos(infoVinosImportada);     // prueba para ver q hasta ahora funciona
-            }
+            //    if (resumen != null)
+            //    {
+            //        pantalla.mostrarResumen(resumen, bodegaSeleccionada);
+            //    }
+            //    //pantalla.mostrarBodegaSeleccionada(bodegaSeleccionada.nombre);
+            //    pantalla.mostrarListaVinos(infoVinosImportada);     // prueba para ver q hasta ahora funciona
+            //}
 
         }
 
@@ -115,7 +115,7 @@ namespace actualizacionVinosBodega.Gestor
             return vinosActualizarCrear;
         }
 
-        private List<Vino> crearOActualizarVinos(List<Tuple<Vino, bool>> vinosActualizarCrear)
+        public List<Vino> crearOActualizarVinos(List<Tuple<Vino, bool>> vinosActualizarCrear)
         {
             List<Vino> resumen = new List<Vino>();
             Vino vinoActCre = null;
@@ -164,7 +164,10 @@ namespace actualizacionVinosBodega.Gestor
                 foreach(Maridaje maridajeSist in objsMaridaje.maridajes)
                 {
                     maridajeNuevo = maridajeSist.sosMaridaje(maridajeImp);
-                    if (maridajeNuevo != null) { maridajes.Add(maridajeNuevo); };
+                    if (maridajeNuevo != null) { 
+                        maridajes.Add(maridajeNuevo);
+                        break;
+                    };
                 }
             }    
            return maridajes;
@@ -182,7 +185,10 @@ namespace actualizacionVinosBodega.Gestor
                 foreach (TipoUva tipoUva in objsTipoUva.tiposUva)
                 {
                     tipoUvaNuevo = tipoUva.sosTipoUva(tipoUvaImportado);
-                    if (tipoUvaNuevo != null) { tiposUva.Add(tipoUvaNuevo); };
+                    if (tipoUvaNuevo != null) { 
+                        tiposUva.Add(tipoUvaNuevo);
+                        break;
+                    };
                 }
             }
             return tiposUva;

@@ -41,6 +41,7 @@ namespace actualizacionVinosBodega.Entidades
                 if (vinosBodega[i].sosEsteVino(vinoImportado))
                 {
                     encontrado = true;
+                    break;
                 }
                 i++;
             }

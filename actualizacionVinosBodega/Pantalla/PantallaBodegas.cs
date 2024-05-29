@@ -69,19 +69,19 @@ namespace actualizacionVinosBodega.Pantalla
 
                 gestor.tomarSeleccionBodega(bodegaSeleccionada);
 
-                //List<Vino> infoVinosImportada = gestor.importarActualizacionesVino();
-                //List<Tuple<Vino,bool>> vinosActualizarCrear = gestor.determinarVinosParaActualizar(infoVinosImportada);
-                //resumen = crearOActualizarVinos(vinosActualizarCrear);
+                List<Vino> infoVinosImportada = gestor.importarActualizacionesVino();
+                List<Tuple<Vino, bool>> vinosActualizarCrear = gestor.determinarVinosParaActualizar(infoVinosImportada);
+                List<Vino> resumen = gestor.crearOActualizarVinos(vinosActualizarCrear);
 
-                //if (resumen != null)
-                //{
-                //    pantalla.mostrarResumen(resumen, bodegaSeleccionada);
-                //}
+                if (resumen != null)
+                {
+                    mostrarResumen(resumen, bodegaSeleccionada);
+                }
 
             }
         }
 
-        public void mostrarResumen(List<Vino> resumen, Bodega bodegaSeleccionada)
+        public void mostrarResumen(List<Vino> resumen, string bodegaSeleccionada)
         {
             if (resumen != null)
             {
