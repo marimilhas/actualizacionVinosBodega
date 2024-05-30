@@ -4,6 +4,7 @@ using actualizacionVinosBodega.Entidades;
 using actualizacionVinosBodega.Datos;
 using actualizacionVinosBodega.Pantalla;
 using Datos;
+using System.Windows.Forms;
 
 namespace actualizacionVinosBodega.Gestor
 {
@@ -19,19 +20,21 @@ namespace actualizacionVinosBodega.Gestor
         private List<Vino> infoVinosImportada;
         private List<Maridaje> maridajes;
         private List<TipoUva> tiposUva;
-
         private List<Tuple<Vino, bool>> vinosActualizarCrear; 
         public List<Vino> resumen;
+        private List<string> seguidoresBodega;
 
         public GestorImportadorBodega(PantallaBodegas pantalla)
         {
             this.pantalla = pantalla;
         }
 
-        public void opcionImportarActualizacionBodegas() 
+        public void opcionImportarActualizacionBodegas()
         {
-            buscarBodegasActualizables();
-            pantalla.mostrarBodegasActualizables(bodegasActualizables); 
+            fechaActual = obtenerFechaActual();
+            buscarBodegasActualizables(fechaActual);
+            pantalla.mostrarBodegasActualizables(bodegasActualizables);
+
 
             //if (bodegaSeleccionada != null)
             //{
@@ -54,9 +57,8 @@ namespace actualizacionVinosBodega.Gestor
             return DateTime.Now.Date;
         }
 
-        private void buscarBodegasActualizables()
+        private void buscarBodegasActualizables(DateTime fechaActual)
         {
-            fechaActual = obtenerFechaActual();
             objsbodega = new DatosBodega();
             List<Bodega> bodegas = objsbodega.Listar();
             bodegasActualizables = new List<string>();
@@ -212,7 +214,7 @@ namespace actualizacionVinosBodega.Gestor
             return vinoCreado;
         }
     
-        private List<string> buscarSeguidoresBodega()
+        private List<string> buscarSeguidoresBodega(Bodega bodegaSeleccionada)
         {
             DatosEnofilo objsEnofilo = new DatosEnofilo();
             List<Enofilo> enofilos = objsEnofilo.enofilos;
@@ -230,6 +232,11 @@ namespace actualizacionVinosBodega.Gestor
                 i++;
             }
             return seguidoresBodega;
+        }
+
+        private void FinCU()
+        {
+            pantalla.Close();
         }
 
     }   

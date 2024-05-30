@@ -107,7 +107,7 @@
             this.dgvVinos.Name = "dgvVinos";
             this.dgvVinos.Size = new System.Drawing.Size(426, 257);
             this.dgvVinos.TabIndex = 3;
-            this.dgvVinos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVinos_CellContentClick);
+            //this.dgvVinos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVinos_CellContentClick);
             // 
             // PantallaBodegas
             // 

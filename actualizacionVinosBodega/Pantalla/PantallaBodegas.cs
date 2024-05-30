@@ -60,7 +60,7 @@ namespace actualizacionVinosBodega.Pantalla
             }
         }
 
-        private void tomarSeleccionBodega(object sender, DataGridViewCellEventArgs e)
+        public void tomarSeleccionBodega(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == dataGridView1.Columns["btnseleccionar"].Index && e.RowIndex >= 0)
             {
@@ -76,8 +76,8 @@ namespace actualizacionVinosBodega.Pantalla
                     List<Tuple<Vino, bool>> vinosActualizarCrear = gestor.determinarVinosParaActualizar(infoVinosImportada);
                     List<Vino> resumen = gestor.crearOActualizarVinos(vinosActualizarCrear);
                     mostrarResumen(resumen, bodegaSeleccionada);
-
-                } else
+                }
+                else
                 {
                     MessageBox.Show("El sistema de bodegas no responde", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
@@ -95,63 +95,6 @@ namespace actualizacionVinosBodega.Pantalla
             }  
         }
 
-        // método de prueba
-        public void mostrarBodegas()
-        {
-            DatosBodega objsbodega = new DatosBodega();
-            List<Bodega> bodegas = objsbodega.Listar();
-            if (bodegas == null || bodegas.Count == 0)
-            {
-                MessageBox.Show("No se encontraron bodegas.");
-                return;
-            } else
-            {
-                MessageBox.Show("Se encontraron bodegas.");
-                return;
-            }
-        }
-
-
-        // método de prueba
-        public void mostrarBodegaSeleccionada(string nombreBodega)
-        {
-            MessageBox.Show($"Bodega seleccionada: {nombreBodega}");
-        }
-
-
-        // método de prueba
-        public void mostrarListaVinos(List<Vino> vinosParaMostrar)
-        {
-            if (vinosParaMostrar.Count == 0)
-            {
-                MessageBox.Show("No hay vinos para mostrar.", "Lista de Vinos", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Lista de Vinos:");
-
-            foreach (Vino vino in vinosParaMostrar)
-            {
-                sb.AppendLine($"- {vino.nombre}, Añada: {vino.añada}, Precio: {vino.precioArs:C}");
-            }
-
-            string mensaje = sb.ToString();
-
-            MessageBox.Show(mensaje, "Lista de Vinos", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void dgvVinos_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        //private void iconbutton1_click(object sender, eventargs e)
-        //{
-        //    list<vino> vinosactcre = gestor.resumen;
-        //    bodega bodega = gestor.bodegaseleccionada;
-        //    mostrarresumen(vinosactcre, bodega);
-        //}
     }
 }
 
