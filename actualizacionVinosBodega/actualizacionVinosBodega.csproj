@@ -54,14 +54,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Datos\DatosBodega.cs" />
+    <Compile Include="Datos\DatosEnofilo.cs" />
     <Compile Include="Datos\DatosMaridaje.cs" />
+    <Compile Include="Datos\DatosSiguiendo.cs" />
     <Compile Include="Datos\DatosTipoUva.cs" />
     <Compile Include="Datos\DatosVarietal.cs" />
     <Compile Include="Datos\DatosVino.cs" />
     <Compile Include="Entidades\Bodega.cs" />
     <Compile Include="Entidades\Enofilo.cs" />
     <Compile Include="Entidades\Maridaje.cs" />
-    <Compile Include="Entidades\Seguido.cs" />
+    <Compile Include="Entidades\Siguiendo.cs" />
+    <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Entidades\Varietal.cs" />
     <Compile Include="Entidades\Vino.cs" />
     <Compile Include="Gestor\GestorImportadorBodega.cs" />

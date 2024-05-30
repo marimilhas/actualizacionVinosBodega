@@ -25,8 +25,8 @@ namespace actualizacionVinosBodega.Gestor
         
         public List<Vino> obtenerActualizacionesVino()
         {
-            // Simulación de un error en la API
-            throw new Exception("La API no está disponible en este momento. Por favor, inténtelo más tarde.");
+            // SIMULACIÓN DE ERROR EN LA API
+            //throw new Exception("La API no está disponible en este momento. Por favor, inténtelo más tarde.");
 
             List<Vino> actualizaciones = new List<Vino>();
 

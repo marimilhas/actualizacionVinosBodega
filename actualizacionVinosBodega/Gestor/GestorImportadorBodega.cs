@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using actualizacionVinosBodega.Entidades;
 using actualizacionVinosBodega.Datos;
 using actualizacionVinosBodega.Pantalla;
@@ -23,7 +20,7 @@ namespace actualizacionVinosBodega.Gestor
         private List<Maridaje> maridajes;
         private List<TipoUva> tiposUva;
 
-        private List<Tuple<Vino, bool>> vinosActualizarCrear; // se puede poner este atributo?
+        private List<Tuple<Vino, bool>> vinosActualizarCrear; 
         public List<Vino> resumen;
 
         public GestorImportadorBodega(PantallaBodegas pantalla)
@@ -99,9 +96,6 @@ namespace actualizacionVinosBodega.Gestor
             
         }
 
-        // por cada vino de la api le pregunta a la bodega si lo tiene, en caso contrario se va a crear
-        // inicializa la lista vinosParaActualizar con los vinos importados y su estado
-        // VER SI MÉTODO CUMPLE CON DIAGRAMA
         public List<Tuple<Vino, bool>> determinarVinosParaActualizar(List<Vino> infoVinosImportada)
         {
             vinosActualizarCrear = new List<Tuple<Vino, bool>>();
@@ -217,6 +211,27 @@ namespace actualizacionVinosBodega.Gestor
             };
             return vinoCreado;
         }
+    
+        private List<string> buscarSeguidoresBodega()
+        {
+            DatosEnofilo objsEnofilo = new DatosEnofilo();
+            List<Enofilo> enofilos = objsEnofilo.enofilos;
+            List<string> seguidoresBodega = new List<string>();
+            string nombreUsuario;
+            int i = 0;
+
+            while (enofilos != null && i < enofilos.Count) 
+            {
+                if (enofilos[i].sigueBodega(bodegaSeleccionada))
+                {
+                    nombreUsuario = enofilos[i].getNombreUsuario();
+                    seguidoresBodega.Add(nombreUsuario);
+                }
+                i++;
+            }
+            return seguidoresBodega;
+        }
+
     }   
 }
 

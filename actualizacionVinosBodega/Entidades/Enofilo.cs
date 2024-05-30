@@ -8,8 +8,26 @@ namespace actualizacionVinosBodega.Entidades
 {
     public class Enofilo
     {
-        private string nombre {  get; set; }
-        private string apellido { get; set; }
-        private string imagenPerfil { get; set; }
+        public string nombre {  get; set; }
+        public string apellido { get; set; }
+        public string imagenPerfil { get; set; }
+        public Usuario usuario { get; set; }
+        public List<Siguiendo> seguido { get; set; } = null;
+
+        public bool sigueBodega(Bodega bodegaSeleccionada)
+        {
+            bool res = false;
+            foreach(Siguiendo seguido in this.seguido)
+            {
+                res = seguido.sosDeBodega(bodegaSeleccionada);
+                if (res) break;
+            }
+            return res;
+        }
+
+        public string getNombreUsuario()
+        {
+            return this.usuario.getNombre();
+        }
     }
 }

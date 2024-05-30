@@ -92,10 +92,8 @@ namespace actualizacionVinosBodega.Pantalla
             } else
             {
                 MessageBox.Show("Esta vacío");
-            }
-             
+            }  
         }
-
 
         // método de prueba
         public void mostrarBodegas()
